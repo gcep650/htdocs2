@@ -1,0 +1,14 @@
+@charset "ISO-8859-1";
+/*
+	Project name: CST-236 Ecommerce Application
+	Version: 1.1
+	Module name: Table Border CSS
+	Module version: 1.1
+	Authors: Gabriel Cepleanu
+	Synopsis: This module provides a style for adding a border to a table.
+ 	References: HTML Tables https://www.w3schools.com/html/html_tables.asp
+*/
+table, td, th {
+    border: 2px solid black;
+    text-align: center;
+}

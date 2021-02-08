@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!-- 
+Project Name: CST-236 Ecommerce Application
+Version: 1.1
+Module name: Search Page
+Module version: 1.0
+Authors: Gabriel Cepleanu
+Synopsis: This module provides a UI for the user to start a search query.
+ -->
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Search for a product</title>
+<link rel="stylesheet" href="centering.css">
+</head>
+<a href='main.php'>Back</a><br>
+<body>
+<form action="searchHandler.php" method="GET">
+<table>
+<tr>
+<td colspan="2"><h1>Search for a product</h1></td>
+</tr>
+<tr>
+<th>Product Name: </th>
+<td><input type="text" id="search" name="query"/></td>
+</tr>
+<tr>
+<th>Search type: </th>
+<td>
+<select name="type" id="type">
+	<option value="contains">Contains</option>
+	<option value="start">Starts with</option>
+	<option value="end">Ends with</option>
+</select>
+</td>
+</tr>
+<tr>
+<td colspan="2"><input type="submit" value="Search"/></td>
+</tr>
+</table>
+</form>
+</body>
+</html>
