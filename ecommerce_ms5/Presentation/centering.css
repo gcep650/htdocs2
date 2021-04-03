@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+/*
+	Project name: CST-236 Ecommerce Application
+	Version: 1.1
+	Module name: Centering CSS
+	Module version: 1.1
+	Authors: Gabriel Cepleanu
+	Synopsis: This module provides a style to center div and table objects.
+ 	References: CSS Centering https://www.w3.org/Style/Examples/007/center.en.html
+*/
+
+div {
+	width: 50%;
+	border: 5px black;
+	padding: 5px;
+	margin: auto;
+	text-align: center;
+}
+
+table {
+	margin-right: auto;
+	margin-left: auto;
+	text-align:center;
+}
