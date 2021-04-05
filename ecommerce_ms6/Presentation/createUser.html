@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- 
+Project Name: CST-236 Ecommerce Application
+Version: 1.2
+Module name: Create User Page
+Module version: 1.0
+Authors: Gabriel Cepleanu
+Synopsis: This module provides a UI for an administrator to create a new user.
+ -->
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Create User</title>
+<link rel="stylesheet" href="centering.css">
+<style>
+table {
+text-align: center;
+}
+
+</style>
+</head>
+<body>
+<div>
+<a href='UserList.php'><button>Back</button></a>
+<form action="../Logic/create_user_handler.php" method="post">
+<table>
+	<tr>
+		<td colspan="2"><h1>Create a new user</h1></td>
+	</tr>
+	<tr>
+		<th>First name:</th>
+		<td><input type="text" name="first"/></td>
+	</tr>
+	<tr>
+		<th>Last name:</th>
+		<td><input type="text" name="last"/></td>
+	</tr>
+	<tr>
+		<th>Email Address:</th>
+		<td><input type="text" name="email"/></td>
+	</tr>
+	<tr>
+		<th>Phone Number:</th>
+		<td><input type="text" name="phone"/></td>
+	</tr>
+	<tr>
+		<th>Username:</th>
+		<td><input type="text" name="username"/></td>
+	</tr>
+	<tr>
+		<th>Password:</th>
+		<td><input type="password" name="password"/></td>
+	</tr>
+	<tr>
+	<td colspan="2"><input type="submit" value="Create"/></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

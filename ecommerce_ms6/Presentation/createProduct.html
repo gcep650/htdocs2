@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- 
+Project Name: CST-236 Ecommerce Application
+Version: 1.2
+Module name: Create Product Page
+Module version: 1.0
+Authors: Gabriel Cepleanu
+Synopsis: This module provides a UI for an administrator to create a new product.
+ -->
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Create Product</title>
+<link rel="stylesheet" href="centering.css">
+<style>
+table {
+text-align: center;
+}
+
+</style>
+</head>
+<body>
+<div>
+<a href='Catalog.php'><button>Back</button></a>
+<form action="../Logic/create_product_handler.php" method="post">
+<table>
+	<tr>
+		<td colspan="2"><h1>Create a new product</h1></td>
+	</tr>
+	<tr>
+		<th>Product name:</th>
+		<td><input type="text" name="name"/></td>
+	</tr>
+	<tr>
+		<th>Product description:</th>
+		<td><input type="text" name="description"/></td>
+	</tr>
+	<tr>
+		<th>Product price:</th>
+		<td><input type="text" name="price"/></td>
+	</tr>
+	<tr>
+		<th>Quantity of product:</th>
+		<td><input type="text" name="quantity"/></td>
+	</tr>
+	<!-- will eventually add feature to upload photo -->
+	<tr>
+		<th>Image path:</th>
+		<td><input type="text" name="image_path"/></td>
+	</tr>
+	<tr>
+	<td colspan="2"><input type="submit" value="Create Product"/></td>
+	</tr>
+</table>
+</form>
+</div>
+</body>
+</html>

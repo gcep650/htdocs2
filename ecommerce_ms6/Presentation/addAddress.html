@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<!-- 
+Project Name: CST-236 Ecommerce Application
+Version: 1.4
+Module name: Add Address Page
+Module version: 1.0
+Authors: Gabriel Cepleanu
+Synopsis: This module provides a UI for a user to add an address to their account.
+ -->
+<head>
+<meta charset="ISO-8859-1">
+<title>Add new Address</title>
+</head>
+<body>
+<h1>Add a new address</h1>
+<form action="../Logic/address_handler.php" method="post">
+<table>
+	<tr>
+		<th>Address</th>
+		<td><input type="text" id="address" name="address"/></td>
+	</tr>
+	<tr>
+		<th>City</th>
+		<td><input type="text" id="city" name="city"/></td>
+	</tr>
+	<tr>
+		<th>State</th>
+		<td><input type="text" id="state" name="state"/></td>
+	</tr>
+	<tr>
+		<th>Zip Code</th>
+		<td><input type="number" min="0" id="zip" name="zip"/></td>
+	</tr>
+	<tr>
+		<td><input type="submit" value="Add"/></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
