@@ -10,8 +10,8 @@
  */
 require_once('DBConnection.php');
 require_once('../Database/Product.php');
-ini_set('display_errors', 1);
-ini_set('error_reporting', -1);
+//ini_set('display_errors', 1);
+//ini_set('error_reporting', -1);
 class ProductsService {
     
     // no arguments. returns array of all products in the products table

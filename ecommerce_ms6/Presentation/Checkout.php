@@ -9,10 +9,12 @@
  * credit card details
  */
 // create back button
+
+//ini_set('display_errors', 1);
+//ini_set('error_reporting', -1);
+
 echo "<a href='../Presentation/myCart.php'>Back</a><br>";
-require_once("../Database/Customer.php");
-require_once("../Database/ShoppingCart.php");
-require_once("../Database/AddressService.php");
+require_once("../Database/Autoloader.php");
 require_once("../Logic/db_funcs.php");
 
 $user = get_user();

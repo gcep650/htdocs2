@@ -20,6 +20,15 @@ ini_set('error_reporting', -1);
 
 require_once("../Database/Autoloader.php");
 
+$cs = new CouponsService();
+echo $cs->checkCouponExists("testt");
+
+//$cart = new ShoppingCart(13);
+//echo $cart->destroy();
+
+//$o = new Order(1);
+//echo $o->getTotal();
+/*
 $os = new OrdersService();
 
 $d1 = date("Y/m/d",strtotime("2021/04/02"));
@@ -28,12 +37,12 @@ $d2 = date("Y/m/d",time());
 //echo $d1;
 
 print_r($os->getOrdersByDate($d1, $d2));
-
+*/
 //$addService = new AddressService();
 
 //print_r($addService->getAddressesFromUser(14));
 
-$p = new Product(1);
+//$p = new Product(1);
 //print_r($p->jsonSerialize());
 
 /*

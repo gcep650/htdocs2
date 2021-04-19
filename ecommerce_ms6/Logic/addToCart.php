@@ -10,14 +10,22 @@
 require_once("../Database/Customer.php");
 require_once("../Database/ShoppingCart.php");
 require_once("../Logic/db_funcs.php");
+//ini_set('display_errors', 1);
+//ini_set('error_reporting', -1);
 
 $product_id = $_POST['product'];
 $quantity = $_POST['quantity'];
 
-$user = get_user();
-$cart = new ShoppingCart($user->getId());
+if (is_numeric($quantity)) {
 
-$cart->addItem($product_id, $quantity);
+    
+    $user = get_user();
+    $cart = new ShoppingCart($user->getId());
+    
+    $cart->addItem($product_id, $quantity);
+}
+
+
 
 header("Location: ../Presentation/Catalog.php");
 

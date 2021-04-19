@@ -7,12 +7,17 @@
  * Authors: Gabriel Cepleanu
  * Synopsis: This module provides a class that represents an Order object from the database.
  */
+
+//ini_set('display_errors', 1);
+//ini_set('error_reporting', -1);
+
 require_once("../Database/Autoloader.php");
 class Order implements JsonSerializable {
     private $order_id;
     private $date;
     private $user_id;
     private $address_id;
+    private $coupon_id;
     private $conn;
     
     // returns total price of the order
@@ -22,6 +27,11 @@ class Order implements JsonSerializable {
         foreach ($items as $item) {
             $total += $item->getCurrent_price() * $item->getQuantity();
         }
+        
+        $cs = new CouponsService();
+        
+        $total = $cs->applyCouponToTotal($total, $this->coupon_id);
+        
         return $total;
     }
     
@@ -61,6 +71,7 @@ class Order implements JsonSerializable {
             $this->date = $info['DATE'];
             $this->user_id = $info['USER_ID'];
             $this->address_id = $info['ADDRESS_ID'];
+            $this->coupon_id = $info['COUPON_ID'];
         }
     }
     
@@ -85,6 +96,12 @@ class Order implements JsonSerializable {
     
     public function getAddress() {
         return new Address($this->address_id);
+    }
+    
+    public function getCoupon() {
+        if (!is_null($this->coupon_id)) {
+            return new Coupon($this->coupon_id);
+        }
     }
     
     /**
@@ -117,6 +134,14 @@ class Order implements JsonSerializable {
     public function getAddress_id()
     {
         return $this->address_id;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getCoupon_id()
+    {
+        return $this->coupon_id;
     }
     
     public function jsonSerialize()

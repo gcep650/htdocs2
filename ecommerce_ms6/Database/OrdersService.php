@@ -1,12 +1,15 @@
 <?php
 /*
  * Project Name: CST-236 Ecommerce Application
- * Version: 1.5
+ * Version: 1.6
  * Module name: OrdersService Class
- * Module version: 1.1
+ * Module version: 1.2
  * Authors: Gabriel Cepleanu
  * Synopsis: This module provides a class that contains functions related to order handling
  */
+
+//ini_set('display_errors', 1);
+//ini_set('error_reporting', -1);
 require_once("../Database/Autoloader.php");
 
 class OrdersService {
@@ -27,13 +30,15 @@ class OrdersService {
         $run->execute();
         
         if ($run->affected_rows > 0) {
-            $query = "SELECT * FROM orders WHERE ORDER_ID=LAST_INSERT_ID()";
+            $query = "SELECT ORDER_ID FROM orders WHERE ORDER_ID=LAST_INSERT_ID()";
             $run = $this->conn->prepare($query);
             $run->execute();
             
             $result = $run->get_result();
             
             if ($result->num_rows > 0) {
+                
+                
                 $info = $result->fetch_assoc();
                 $order_id = $info['ORDER_ID'];
                 $order = new Order($order_id);
@@ -41,6 +46,21 @@ class OrdersService {
                 foreach ($cart->getItems() as $item) {
                     $order->addItem($item->getProductId(), $item->getQuantity());
                 }
+                
+                $coupon_id = $cart->getCoupon_id();
+                
+                if (!is_null($coupon_id)) {
+                    $cs = new CouponsService();
+                    $cs->addCouponToOrder($order_id, $cart->getCoupon_id());
+                    
+                    $query = "INSERT INTO coupons_used (USER_ID,COUPON_ID) VALUES (?,?)";
+                    $run = $this->conn->prepare($query);
+                    $run->bind_param('ii', $user_id, $coupon_id);
+                    $run->execute();
+                }
+                
+                $order->updateValues();
+                
                 $cart->destroy();
                 return $order;
             }

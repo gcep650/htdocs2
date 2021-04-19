@@ -1,9 +1,9 @@
 <?php
 /*
  * Project Name: CST-236 Ecommerce Application
- * Version: 1.3
+ * Version: 1.6
  * Module name: Shopping Cart Class
- * Module version: 1.0
+ * Module version: 1.1
  * Authors: Gabriel Cepleanu
  * Synopsis: This module provides a class that represents the user's shopping cart.
  */
@@ -15,18 +15,31 @@ class ShoppingCart {
     private $cart_id;
     private $user_id;
     private $items;
-    private $db;
+    private $coupon_id;
+    private $conn;
     
     
+    /**
+     * @return mixed
+     */
+    public function getCoupon_id()
+    {
+        return $this->coupon_id;
+    }
+
     // returns the total price of the user's shopping cart
     function totalPrice() {
         // update the items
+        $total = 0;
         $this->getItems();
         foreach ($this->items as $item) {
             $product = $item->getProduct();
             // add the product price times the quantity to the total
             $total += $product->getPrice() * $item->getQuantity();
         }
+        $cs = new CouponsService();
+        
+        $total = $cs->applyCouponToTotal($total, $this->coupon_id);
         return $total;
     }
     
@@ -81,7 +94,7 @@ class ShoppingCart {
     function getItems() {
         $items = array();
         
-        $con = $this->db->getCon();
+        $con = $this->conn;
         
         $query = "SELECT * FROM cart_items WHERE CART_ID = ?";
         
@@ -106,7 +119,7 @@ class ShoppingCart {
     
     // add an item to the user's cart. takes in product_id and quantity
     function addItem(int $item_id, int $quantity) {
-        $con = $this->db->getCon();
+        $con = $this->conn;
         
         $query = "INSERT INTO cart_items (CART_ID,PRODUCT_ID,QUANTITY) VALUES (?,?,?)";
         
@@ -127,14 +140,14 @@ class ShoppingCart {
     // creates the shopping cart. if a shopping cart for the specified user is not found,
     // a shopping cart entry is created in the database
     function __construct(int $id) {
-        $this->db = new DBConnection();
+        $db = new DBConnection();
         $this->user_id = $id;
         
-        $con = $this->db->getCon();
+        $this->conn = $db->getCon();
         
         $query = "SELECT * FROM shopping_carts WHERE USER_ID=?";
         
-        $run = $con->prepare($query);
+        $run = $this->conn->prepare($query);
         $run->bind_param('i', $id);
         $run->execute();
         
@@ -145,6 +158,7 @@ class ShoppingCart {
             $info = $results->fetch_assoc();
             
             $this->cart_id = $info['CART_ID'];
+            $this->coupon_id = $info['COUPON_ID'];
             
             //echo "Cart found.<br>";
             
@@ -157,7 +171,7 @@ class ShoppingCart {
     
     // creates a shopping cart entry for the specified user
     private function createCart() {
-        $con = $this->db->getCon();
+        $con = $this->conn;
         
         $query = "INSERT INTO shopping_carts (USER_ID,DATE_CREATED) VALUES (?,NOW())";
         
@@ -203,10 +217,12 @@ class ShoppingCart {
     }
     
     public function destroy() {
-        $query = "DELETE FROM shopping_carts WHERE CART_ID=?";
-        $run = $this->db->getCon()->prepare($query);
-        $run->bind_param('i', $this->cart_id);
+        $query = "DELETE FROM shopping_carts WHERE USER_ID=?";
+        $run = $this->conn->prepare($query);
+        $run->bind_param('i', $this->user_id);
         $run->execute();
+        
+        //print_r($run);
         
         return $run->affected_rows;
     }

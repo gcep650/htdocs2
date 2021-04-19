@@ -1,17 +1,14 @@
 <?php
 /*
  * Project Name: CST-236 Ecommerce Application
- * Version: 1.3
+ * Version: 1.6
  * Module name: Customer Shopping Cart Module
  * Module version: 1.0
  * Authors: Gabriel Cepleanu
  * Synopsis: This module provides a user interface to view the user's shopping cart as well as
  * remove or update items
  */
-require_once("../Database/Customer.php");
-require_once("../Database/ShoppingCart.php");
-require_once("../Database/CartItem.php");
-require_once("../Database/Product.php");
+require_once("../Database/Autoloader.php");
 require_once("../Logic/db_funcs.php");
 
 // get the user from the session and get the shopping cart
@@ -80,7 +77,25 @@ for ($i = 0; $i < count($items); $i++) {
 
 ?>
 </table>
-<h3><b>Total: </b>$<?php echo $cart->totalPrice();?></h3><br>
+<h3><b>Total: </b>$<?php echo number_format($cart->totalPrice(),2);?></h3><br>
+<?php 
+session_start();
+if (isset($_SESSION['msg'])) {
+    echo "<b>" . $_SESSION['msg'] . "</b><br>";
+    $_SESSION['msg'] = NULL;
+}
+$coupon_id = $cart->getCoupon_id();
+if (!is_null($coupon_id)) {
+    $c = new Coupon($coupon_id);
+    echo "<p>Coupon code <b>" . $c->getCoupon_code() . "</b> activated.</p>";
+}
+else {
+    echo "<form action='../Logic/coupon_handler.php' method='post'>";
+    echo "<p>Enter a coupon code: </p><br>";
+    echo "<input type='text' id='coupon' name='coupon'/><input type='submit' value='Submit'/><br><br>";
+    echo "</form>";
+}
+?>
 <a href="../Presentation/Checkout.php">
 <button>Checkout</button>
 </a>
